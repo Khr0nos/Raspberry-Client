@@ -29,7 +29,7 @@ namespace RaspberryBackground {
 
             rng = new Random();
             client = new CloudClient {BaseUri = new Uri("http://cloudtfg.azurewebsites.net")};
-            timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(30000));
+            timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(5000));
 
             //deferral.Complete();
         }
