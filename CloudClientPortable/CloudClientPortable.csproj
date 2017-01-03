@@ -8,7 +8,7 @@
     <ProjectGuid>{BED5E3E0-53D0-48FF-BDEF-79A3B5F18CA1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CloudClientPortable</RootNamespace>
+    <RootNamespace>CloudAPI.Rest.Client</RootNamespace>
     <AssemblyName>CloudClientPortable</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>

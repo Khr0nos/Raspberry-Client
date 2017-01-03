@@ -1,5 +1,4 @@
 
-
 namespace CloudAPI.Rest.Client.Models {
     using System.Linq;
 
