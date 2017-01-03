@@ -28,7 +28,7 @@ namespace RaspberryBackground {
             deferral = taskInstance.GetDeferral();
 
             rng = new Random();
-            client = new CloudClient {BaseUri = new Uri("http://cloudtfg.azurewebsites.net")};
+            client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
             timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(5000));
 
             //deferral.Complete();

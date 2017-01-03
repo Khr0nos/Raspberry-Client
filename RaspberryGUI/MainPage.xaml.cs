@@ -22,7 +22,7 @@ namespace RaspberryGUI {
         public MainPage() {
             this.InitializeComponent();
             rng = new Random();
-            client = new CloudClient {BaseUri = new Uri("http://cloudtfg.azurewebsites.net")};
+            client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
             var timer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(5000)};
             timer.Tick += TimerOnTick;
             timer.Start();

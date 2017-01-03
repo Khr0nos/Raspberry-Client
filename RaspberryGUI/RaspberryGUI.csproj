@@ -132,11 +132,6 @@
       <Name>CloudClientPortable</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Runtime.Extensions">
-      <HintPath>..\..\..\..\..\.nuget\packages\System.Runtime.Extensions\4.1.0\ref\netcore50\System.Runtime.Extensions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
