@@ -1,4 +1,7 @@
 
+using System.Threading.Tasks;
+using Microsoft.Rest;
+
 namespace CloudAPI.Rest.Client {
     using Models;
 
@@ -34,8 +37,8 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task
-            <Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<HistoricData>>>
+        Task
+            <HttpOperationResponse<System.Collections.Generic.IList<HistoricData>>>
             GetDataAsync(
                 System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders =
                     null,
@@ -53,8 +56,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<HistoricData>>
-            PostDataAsync(HistoricData nou = default(HistoricData),
+        Task<HttpOperationResponse<object>> PostDataAsync(HistoricData nou = default(HistoricData),
                 System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders =
                     null,
                 System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -71,7 +73,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<HistoricData>>
+        Task<HttpOperationResponse<HistoricData>>
             GetDataAsync(int id,
                 System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders =
                     null,
@@ -92,7 +94,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse> PutDataAsync(
+        Task<HttpOperationResponse> PutDataAsync(
             int id,
             HistoricData nou = default(HistoricData),
             System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null,
@@ -110,7 +112,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        System.Threading.Tasks.Task<Microsoft.Rest.HttpOperationResponse<HistoricData>>
+        Task<HttpOperationResponse<HistoricData>>
             DeleteDataAsync(int id,
                 System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders =
                     null,
