@@ -37,7 +37,7 @@ namespace RaspberryBackground {
         private void timer_tick(ThreadPoolTimer tim) {
             try {
                 data = new HistoricData(4, rng.NextDouble().ToString(), 1);
-                var response = client.ApiHistoricdataPost(data);
+                var response = client.PostData(data);
                 Debug.WriteLine("Data added with id = " + response.IdhistoricData);
             } catch (Exception e) {
                 Debug.WriteLine(e);

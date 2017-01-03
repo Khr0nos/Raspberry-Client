@@ -31,7 +31,7 @@ namespace RaspberryGUI {
         private void TimerOnTick(object sender, object o) {
             try {
                 data = new HistoricData(4, rng.NextDouble().ToString(), 1);
-                var res = client.ApiHistoricdataPostWithHttpMessagesAsync(data);
+                var res = client.PostDataAsync(data);
                 if (res.Result.Response.StatusCode == HttpStatusCode.Created) {
                     var response = res.Result.Body;
                     output.Text =

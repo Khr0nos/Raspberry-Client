@@ -133,8 +133,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>..\..\..\..\.nuget\packages\Microsoft.Rest.ClientRuntime\2.3.4\lib\netstandard1.1\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>..\..\..\..\..\.nuget\packages\System.Runtime.Extensions\4.1.0\ref\netcore50\System.Runtime.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
