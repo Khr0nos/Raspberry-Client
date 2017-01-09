@@ -1,12 +1,13 @@
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using CloudAPI.Rest.Client.Models;
 
 namespace CloudAPI.Rest.Client {
-    using System.Threading.Tasks;
-    using Models;
-
     /// <summary>
     /// Extension methods for CloudClient.
     /// </summary>
-    public static partial class CloudClientExtensions {
+    public static class CloudClientExtensions {
         /// <summary>
         /// Gets all HistoricData Values
         /// </summary>
@@ -16,10 +17,10 @@ namespace CloudAPI.Rest.Client {
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
-        public static System.Collections.Generic.IList<HistoricData> GetData(this ICloudClient operations) {
+        public static IList<HistoricData> GetData(this ICloudClient operations) {
             return
                 Task.Factory.StartNew(s => GetDataAsync(((ICloudClient) s)), operations,
-                    System.Threading.CancellationToken.None, TaskCreationOptions.None,
+                    CancellationToken.None, TaskCreationOptions.None,
                     TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
@@ -35,9 +36,9 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<System.Collections.Generic.IList<HistoricData>> GetDataAsync(
+        public static async Task<IList<HistoricData>> GetDataAsync(
             this ICloudClient operations,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            CancellationToken cancellationToken = default(CancellationToken)) {
             using (var _result = await operations.GetDataAsync(null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
@@ -55,7 +56,7 @@ namespace CloudAPI.Rest.Client {
         public static object PostData(this ICloudClient operations, HistoricData nou = default(HistoricData)) {
             return
                 Task.Factory.StartNew(s => ((ICloudClient) s).PostDataAsync(nou), operations,
-                        System.Threading.CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
+                        CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
                     .Unwrap()
                     .GetAwaiter()
                     .GetResult();
@@ -75,7 +76,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> PostDataAsync(this ICloudClient operations,
             HistoricData nou = default(HistoricData),
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            CancellationToken cancellationToken = default(CancellationToken)) {
             using (var _result = await operations.PostDataAsync(nou, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
@@ -90,11 +91,10 @@ namespace CloudAPI.Rest.Client {
         /// <param name='id'>
         /// HistoricData identifier
         /// </param>
-        public static HistoricData GetData(this ICloudClient operations, int id) {
+        public static object GetData(this ICloudClient operations, int id) {
             return
-                Task.Factory.StartNew(s => GetDataAsync(((ICloudClient) s), id), operations,
-                    System.Threading.CancellationToken.None, TaskCreationOptions.None,
-                    TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICloudClient) s).GetDataAsync(id), operations, CancellationToken.None,
+                    TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<HistoricData> GetDataAsync(this ICloudClient operations,
+        public static async Task<object> GetDataAsync(this ICloudClient operations,
             int id,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            CancellationToken cancellationToken = default(CancellationToken)) {
             using (var _result = await operations.GetDataAsync(id, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
@@ -129,9 +129,9 @@ namespace CloudAPI.Rest.Client {
         /// <param name='nou'>
         /// HistoricData to be updated
         /// </param>
-        public static void PutData(this ICloudClient operations, int id, HistoricData nou = default(HistoricData)) {
-            Task.Factory.StartNew(s => PutDataAsync(((ICloudClient) s), id, nou), operations,
-                System.Threading.CancellationToken.None, TaskCreationOptions.None,
+        public static object PutData(this ICloudClient operations, int id, HistoricData nou = default(HistoricData)) {
+            return Task.Factory.StartNew(s => PutDataAsync(((ICloudClient) s), id, nou), operations,
+                CancellationToken.None, TaskCreationOptions.None,
                 TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
@@ -150,11 +150,13 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task PutDataAsync(this ICloudClient operations,
+        public static async Task<object> PutDataAsync(this ICloudClient operations,
             int id,
             HistoricData nou = default(HistoricData),
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
-            await operations.PutDataAsync(id, nou, null, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default(CancellationToken)) {
+            using (var _result = await operations.PutDataAsync(id, nou, null, cancellationToken).ConfigureAwait(false)) {
+                return _result;
+            }
         }
 
         /// <summary>
@@ -166,11 +168,10 @@ namespace CloudAPI.Rest.Client {
         /// <param name='id'>
         /// HistoricData identifier
         /// </param>
-        public static HistoricData DeleteData(this ICloudClient operations, int id) {
+        public static object DeleteData(this ICloudClient operations, int id) {
             return
-                Task.Factory.StartNew(s => DeleteDataAsync(((ICloudClient) s), id), operations,
-                    System.Threading.CancellationToken.None, TaskCreationOptions.None,
-                    TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((ICloudClient) s).DeleteDataAsync(id), operations, CancellationToken.None,
+                    TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -185,9 +186,9 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<HistoricData> DeleteDataAsync(this ICloudClient operations,
+        public static async Task<object> DeleteDataAsync(this ICloudClient operations,
             int id,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            CancellationToken cancellationToken = default(CancellationToken)) {
             using (var _result = await operations.DeleteDataAsync(id, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }

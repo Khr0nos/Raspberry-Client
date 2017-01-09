@@ -1,11 +1,17 @@
-
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using CloudAPI.Rest.Client.Models;
 using Microsoft.Rest;
-using Newtonsoft.Json.Linq;
+using Microsoft.Rest.Serialization;
+using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client {
-    using Models;
-
     /// <summary>
     /// ASP.NET Core Web service using a REST API
     /// </summary>
@@ -13,17 +19,17 @@ namespace CloudAPI.Rest.Client {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        public Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; private set; }
+        public JsonSerializerSettings SerializationSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
+        public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CloudClient class.
@@ -31,7 +37,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CloudClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers) {
+        public CloudClient(params DelegatingHandler[] handlers) : base(handlers) {
             Initialize();
         }
 
@@ -44,8 +50,8 @@ namespace CloudAPI.Rest.Client {
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CloudClient(System.Net.Http.HttpClientHandler rootHandler,
-            params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers) {
+        public CloudClient(HttpClientHandler rootHandler,
+            params DelegatingHandler[] handlers) : base(rootHandler, handlers) {
             Initialize();
         }
 
@@ -61,9 +67,9 @@ namespace CloudAPI.Rest.Client {
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CloudClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers) {
+        public CloudClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers) {
             if (baseUri == null) {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
             BaseUri = baseUri;
         }
@@ -83,11 +89,11 @@ namespace CloudAPI.Rest.Client {
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public CloudClient(System.Uri baseUri,
-            System.Net.Http.HttpClientHandler rootHandler,
-            params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers) {
+        public CloudClient(Uri baseUri,
+            HttpClientHandler rootHandler,
+            params DelegatingHandler[] handlers) : this(rootHandler, handlers) {
             if (baseUri == null) {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
             BaseUri = baseUri;
         }
@@ -101,26 +107,26 @@ namespace CloudAPI.Rest.Client {
         /// Initializes client properties.
         /// </summary>
         private void Initialize() {
-            BaseUri = new System.Uri("http://localhost:5000/");
-            SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
-                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter> {
-                    new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
+            BaseUri = new Uri("http://localhost:5000/");
+            SerializationSettings = new JsonSerializerSettings {
+                Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver(),
+                Converters = new List<JsonConverter> {
+                    new Iso8601TimeSpanConverter()
                 }
             };
-            DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings {
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
-                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter> {
-                    new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
+            DeserializationSettings = new JsonSerializerSettings {
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver(),
+                Converters = new List<JsonConverter> {
+                    new Iso8601TimeSpanConverter()
                 }
             };
             CustomInitialize();
@@ -148,31 +154,31 @@ namespace CloudAPI.Rest.Client {
         /// A response object containing the response body and response headers.
         /// </return>
         public async
-            System.Threading.Tasks.Task
-            <HttpOperationResponse<System.Collections.Generic.IList<HistoricData>>> GetDataAsync(
-                System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders =
+            Task
+            <HttpOperationResponse<IList<HistoricData>>> GetDataAsync(
+                Dictionary<string, List<string>> customHeaders =
                     null,
-                System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+                CancellationToken cancellationToken = default(CancellationToken)) {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace) {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters =
-                    new System.Collections.Generic.Dictionary<string, object>();
+                Dictionary<string, object> tracingParameters =
+                    new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetData", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url =
-                new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata")
+                new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata")
                     .ToString();
             // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (customHeaders != null) {
                 foreach (var _header in customHeaders) {
@@ -194,13 +200,13 @@ namespace CloudAPI.Rest.Client {
             if (_shouldTrace) {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int) _statusCode != 200) {
                 var ex =
                     new HttpOperationException(
-                        string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                        $"Operation returned an invalid status code '{_statusCode}'");
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 } else {
@@ -218,7 +224,7 @@ namespace CloudAPI.Rest.Client {
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<System.Collections.Generic.IList<HistoricData>>();
+            var _result = new HttpOperationResponse<IList<HistoricData>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -226,10 +232,10 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert
-                            .DeserializeObject<System.Collections.Generic.IList<HistoricData>>(_responseContent,
+                        SafeJsonConvert
+                            .DeserializeObject<IList<HistoricData>>(_responseContent,
                                 DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
@@ -267,8 +273,8 @@ namespace CloudAPI.Rest.Client {
         /// </return>
         public async Task<HttpOperationResponse<object>> PostDataAsync(
             HistoricData nou = default(HistoricData),
-            System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken)) {
             if (nou != null) {
                 nou.Validate();
             }
@@ -277,22 +283,22 @@ namespace CloudAPI.Rest.Client {
             string _invocationId = null;
             if (_shouldTrace) {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters =
-                    new System.Collections.Generic.Dictionary<string, object>();
+                Dictionary<string, object> tracingParameters =
+                    new Dictionary<string, object>();
                 tracingParameters.Add("nou", nou);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "PostDataAsync", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = this.BaseUri.AbsoluteUri;
+            var _baseUrl = BaseUri.AbsoluteUri;
             var _url =
-                new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata")
+                new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata")
                     .ToString();
             // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (customHeaders != null) {
                 foreach (var _header in customHeaders) {
@@ -306,35 +312,35 @@ namespace CloudAPI.Rest.Client {
             // Serialize Request
             string _requestContent = null;
             if (nou != null) {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(nou,
-                    this.SerializationSettings);
-                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _requestContent = SafeJsonConvert.SerializeObject(nou,
+                    SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =
-                    System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                    MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace) {
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace) {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int) _statusCode != 201 && (int) _statusCode != 400 && (int) _statusCode != 409) {
                 var ex =
-                    new Microsoft.Rest.HttpOperationException(
-                        string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                    new HttpOperationException(
+                        $"Operation returned an invalid status code '{_statusCode}'");
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 } else {
                     _responseContent = string.Empty;
                 }
-                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace) {
                     ServiceClientTracing.Error(_invocationId, ex);
                 }
@@ -345,7 +351,7 @@ namespace CloudAPI.Rest.Client {
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.HttpOperationResponse<object>();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -353,14 +359,14 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
-                            this.DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                            DeserializationSettings);
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.",
+                    throw new SerializationException("Unable to deserialize the response.",
                         _responseContent, ex);
                 }
             }
@@ -369,14 +375,14 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent,
-                            this.DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                        SafeJsonConvert.DeserializeObject<object>(_responseContent,
+                            DeserializationSettings);
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.",
+                    throw new SerializationException("Unable to deserialize the response.",
                         _responseContent, ex);
                 }
             }
@@ -385,14 +391,14 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent,
-                            this.DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                        SafeJsonConvert.DeserializeObject<object>(_responseContent,
+                            DeserializationSettings);
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
                     }
-                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.",
+                    throw new SerializationException("Unable to deserialize the response.",
                         _responseContent, ex);
                 }
             }
@@ -406,13 +412,13 @@ namespace CloudAPI.Rest.Client {
         /// Gets specific HistoricData
         /// </summary>
         /// <param name='id'>
-        /// HistoricData identifier
+        ///     HistoricData identifier
         /// </param>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        ///     Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
-        /// The cancellation token.
+        ///     The cancellation token.
         /// </param>
         /// <exception cref="Microsoft.Rest.HttpOperationException">
         /// Thrown when the operation returned an invalid status code
@@ -423,17 +429,16 @@ namespace CloudAPI.Rest.Client {
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<HttpOperationResponse<HistoricData>> GetDataAsync(
-            int id,
-            System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+        public async Task<HttpOperationResponse<object>> GetDataAsync(int id,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken)) {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace) {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters =
-                    new System.Collections.Generic.Dictionary<string, object>();
+                Dictionary<string, object> tracingParameters =
+                    new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetData", tracingParameters);
@@ -441,17 +446,17 @@ namespace CloudAPI.Rest.Client {
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url =
-                new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
+                new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
                     .ToString();
             _url = _url.Replace("{id}",
-                System.Uri.EscapeDataString(
-                    Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(id, SerializationSettings)
+                Uri.EscapeDataString(
+                    SafeJsonConvert.SerializeObject(id, SerializationSettings)
                         .Trim('"')));
             // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (customHeaders != null) {
                 foreach (var _header in customHeaders) {
@@ -473,13 +478,13 @@ namespace CloudAPI.Rest.Client {
             if (_shouldTrace) {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int) _statusCode != 200 && (int) _statusCode != 404) {
                 var ex =
                     new HttpOperationException(
-                        string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                        $"Operation returned an invalid status code '{_statusCode}'");
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 } else {
@@ -497,7 +502,7 @@ namespace CloudAPI.Rest.Client {
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<HistoricData>();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -505,15 +510,28 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
                             DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
                     }
                     throw new SerializationException("Unable to deserialize the response.",
                         _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int) _statusCode == 404) {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                } catch (JsonException ex) {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null) {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace) {
@@ -543,10 +561,10 @@ namespace CloudAPI.Rest.Client {
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<HttpOperationResponse> PutDataAsync(int id,
+        public async Task<HttpOperationResponse> PutDataAsync(int id,
             HistoricData nou = default(HistoricData),
-            System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken)) {
             if (nou != null) {
                 nou.Validate();
             }
@@ -555,8 +573,8 @@ namespace CloudAPI.Rest.Client {
             string _invocationId = null;
             if (_shouldTrace) {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters =
-                    new System.Collections.Generic.Dictionary<string, object>();
+                Dictionary<string, object> tracingParameters =
+                    new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("nou", nou);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -565,17 +583,17 @@ namespace CloudAPI.Rest.Client {
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url =
-                new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
+                new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
                     .ToString();
             _url = _url.Replace("{id}",
-                System.Uri.EscapeDataString(
-                    Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(id, SerializationSettings)
+                Uri.EscapeDataString(
+                    SafeJsonConvert.SerializeObject(id, SerializationSettings)
                         .Trim('"')));
             // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (customHeaders != null) {
                 foreach (var _header in customHeaders) {
@@ -589,11 +607,11 @@ namespace CloudAPI.Rest.Client {
             // Serialize Request
             string _requestContent = null;
             if (nou != null) {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(nou,
+                _requestContent = SafeJsonConvert.SerializeObject(nou,
                     SerializationSettings);
-                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =
-                    System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                    MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace) {
@@ -604,13 +622,13 @@ namespace CloudAPI.Rest.Client {
             if (_shouldTrace) {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int) _statusCode != 204 && (int) _statusCode != 404 && (int) _statusCode != 400) {
                 var ex =
                     new HttpOperationException(
-                        string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                        $"Operation returned an invalid status code '{_statusCode}'");
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 } else {
@@ -628,9 +646,35 @@ namespace CloudAPI.Rest.Client {
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int) _statusCode == 404) {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                } catch (JsonException ex) {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null) {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int) _statusCode == 400) {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                } catch (JsonException ex) {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null) {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace) {
                 ServiceClientTracing.Exit(_invocationId, _result);
             }
@@ -658,17 +702,17 @@ namespace CloudAPI.Rest.Client {
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<HttpOperationResponse<HistoricData>> DeleteDataAsync(
+        public async Task<HttpOperationResponse<object>> DeleteDataAsync(
             int id,
-            System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null,
-            System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) {
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken)) {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace) {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                System.Collections.Generic.Dictionary<string, object> tracingParameters =
-                    new System.Collections.Generic.Dictionary<string, object>();
+                Dictionary<string, object> tracingParameters =
+                    new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteData", tracingParameters);
@@ -676,17 +720,17 @@ namespace CloudAPI.Rest.Client {
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url =
-                new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
+                new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/historicdata/{id}")
                     .ToString();
             _url = _url.Replace("{id}",
-                System.Uri.EscapeDataString(
-                    Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(id, SerializationSettings)
+                Uri.EscapeDataString(
+                    SafeJsonConvert.SerializeObject(id, SerializationSettings)
                         .Trim('"')));
             // Create HTTP transport objects
-            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (customHeaders != null) {
                 foreach (var _header in customHeaders) {
@@ -708,13 +752,13 @@ namespace CloudAPI.Rest.Client {
             if (_shouldTrace) {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int) _statusCode != 200 && (int) _statusCode != 404) {
                 var ex =
                     new HttpOperationException(
-                        string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                        $"Operation returned an invalid status code '{_statusCode}'");
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 } else {
@@ -732,7 +776,7 @@ namespace CloudAPI.Rest.Client {
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<HistoricData>();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -740,15 +784,28 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
                             DeserializationSettings);
-                } catch (Newtonsoft.Json.JsonException ex) {
+                } catch (JsonException ex) {
                     _httpRequest.Dispose();
                     if (_httpResponse != null) {
                         _httpResponse.Dispose();
                     }
                     throw new SerializationException("Unable to deserialize the response.",
                         _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int) _statusCode == 404) {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                } catch (JsonException ex) {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null) {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace) {
