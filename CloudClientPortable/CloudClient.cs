@@ -275,9 +275,7 @@ namespace CloudAPI.Rest.Client {
             HistoricData nou = default(HistoricData),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) {
-            if (nou != null) {
-                nou.Validate();
-            }
+            nou?.Validate();
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -565,9 +563,7 @@ namespace CloudAPI.Rest.Client {
             HistoricData nou = default(HistoricData),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) {
-            if (nou != null) {
-                nou.Validate();
-            }
+            nou?.Validate();
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
