@@ -14,6 +14,7 @@ namespace RaspberryBackground {
         private HistoricData data;
         private Random rng;
         private ThreadPoolTimer timer;
+        private int delay = 5000;
 
         private BackgroundTaskDeferral deferral;
         public void Run(IBackgroundTaskInstance taskInstance) {
@@ -29,8 +30,8 @@ namespace RaspberryBackground {
 
             rng = new Random();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
-            timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(5000));
-
+            timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(delay));
+            
             //deferral.Complete();
         }
 
