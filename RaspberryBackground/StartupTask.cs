@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading; //Threading.Timer ?
 using Windows.System.Threading;
 using CloudAPI.Rest.Client;
 using Windows.ApplicationModel.Background;
@@ -31,7 +32,6 @@ namespace RaspberryBackground {
             rng = new Random();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
             timer = ThreadPoolTimer.CreatePeriodicTimer(timer_tick, TimeSpan.FromMilliseconds(delay));
-            
             //deferral.Complete();
         }
 

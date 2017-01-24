@@ -7,7 +7,16 @@ namespace CloudAPI.Rest.Client.Models {
         /// <summary>
         /// Initializes a new instance of the HistoricData class.
         /// </summary>
-        public HistoricData() {}
+        public HistoricData(int device, string dataValue, int dataType) {
+            IdhistoricData = default(int?);
+            Iddevice = device;
+            HistDataDate = default(DateTime?);
+            HistDataValue = dataValue;
+            IddataType = dataType;
+            HistDataToDevice = false;
+            HistDataAck = false;
+            HistDataAux = null;
+        }
 
         /// <summary>
         /// Initializes a new instance of the HistoricData class.
