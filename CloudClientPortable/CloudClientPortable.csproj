@@ -36,8 +36,13 @@
   <ItemGroup>
     <Compile Include="CloudClient.cs" />
     <Compile Include="CloudClientExtensions.cs" />
+    <Compile Include="Models\Devices.cs" />
     <Compile Include="Models\HistoricData.cs" />
     <Compile Include="ICloudClient.cs" />
+    <Compile Include="Models\JsonPatchDocumentDevices.cs" />
+    <Compile Include="Models\JsonPatchDocumentHistoricData.cs" />
+    <Compile Include="Models\OperationDevices.cs" />
+    <Compile Include="Models\OperationHistoricData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

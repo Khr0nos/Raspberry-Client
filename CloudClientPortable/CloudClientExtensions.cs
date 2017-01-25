@@ -193,5 +193,221 @@ namespace CloudAPI.Rest.Client {
                 return _result.Body;
             }
         }
+
+        /// <summary>
+        /// Gets all devices definitions
+        /// </summary>
+        /// <remarks>
+        /// Returns a JSON array of Devices
+        /// </remarks>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        public static IList<Devices> GetDevices(this ICloudClient operations)
+        {
+            return Task.Factory.StartNew(s => GetDevicesAsync(((ICloudClient)s)), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Gets all devices definitions
+        /// </summary>
+        /// <remarks>
+        /// Returns a JSON array of Devices
+        /// </remarks>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<IList<Devices>> GetDevicesAsync(this ICloudClient operations, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetDevicesAsync(null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Adds new Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='nou'>
+        /// new logic Device definition to be added
+        /// </param>
+        public static object PostDevice(this ICloudClient operations, Devices nou = default(Devices))
+        {
+            return Task.Factory.StartNew(s => ((ICloudClient)s).PostDeviceAsync(nou), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Adds new Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='nou'>
+        /// new logic Device definition to be added
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> PostDeviceAsync(this ICloudClient operations, Devices nou = default(Devices), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.PostDeviceAsync(nou, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Gets specific Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        public static object GetDevices(this ICloudClient operations, int id)
+        {
+            return Task.Factory.StartNew(s => GetDeviceAsync(((ICloudClient)s), id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Gets specific Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetDeviceAsync(this ICloudClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetDeviceAsync(id, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Updates existing Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='nou'>
+        /// Device to be updated
+        /// </param>
+        public static object PutDevice(this ICloudClient operations, int id, Devices nou = default(Devices))
+        {
+            return Task.Factory.StartNew(s => ((ICloudClient)s).PutDeviceAsync(id, nou), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Updates existing Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='nou'>
+        /// Device to be updated
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> PutDeviceAsync(this ICloudClient operations, int id, Devices nou = default(Devices), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.PutDeviceAsync(id, nou, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Deletes specific Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        public static object DeleteDevice(this ICloudClient operations, int id)
+        {
+            return Task.Factory.StartNew(s => ((ICloudClient)s).DeleteDeviceAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Deletes specific Device
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> DeleteDeviceAsync(this ICloudClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.DeleteDeviceAsync(id, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
+        /// Updates some Device information
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='patch'>
+        /// Device updated information
+        /// </param>
+        public static object PatchDevice(this ICloudClient operations, int id, JsonPatchDocumentDevices patch = default(JsonPatchDocumentDevices))
+        {
+            return Task.Factory.StartNew(s => PatchDeviceAsync(((ICloudClient)s), id, patch), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Updates some Device information
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// Device identifier
+        /// </param>
+        /// <param name='patch'>
+        /// Device updated information
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> PatchDeviceAsync(this ICloudClient operations, int id, JsonPatchDocumentDevices patch = default(JsonPatchDocumentDevices), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.PatchDeviceAsync(id, patch, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
     }
 }

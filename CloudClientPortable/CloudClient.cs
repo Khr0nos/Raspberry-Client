@@ -107,12 +107,12 @@ namespace CloudAPI.Rest.Client {
         /// Initializes client properties.
         /// </summary>
         private void Initialize() {
-            BaseUri = new Uri("http://localhost:5000/");
+            BaseUri = new Uri("http://cloudtfg.azurewebsiites.net/");
             SerializationSettings = new JsonSerializerSettings {
                 Formatting = Formatting.Indented,
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
+                DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                NullValueHandling = NullValueHandling.Include,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
                 Converters = new List<JsonConverter> {
@@ -121,8 +121,8 @@ namespace CloudAPI.Rest.Client {
             };
             DeserializationSettings = new JsonSerializerSettings {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
+                DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                NullValueHandling = NullValueHandling.Include,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
                 Converters = new List<JsonConverter> {
@@ -153,12 +153,7 @@ namespace CloudAPI.Rest.Client {
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async
-            Task
-            <HttpOperationResponse<IList<HistoricData>>> GetDataAsync(
-                Dictionary<string, List<string>> customHeaders =
-                    null,
-                CancellationToken cancellationToken = default(CancellationToken)) {
+        public async Task <HttpOperationResponse<IList<HistoricData>>> GetDataAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken)) {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -808,6 +803,42 @@ namespace CloudAPI.Rest.Client {
                 ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
+        }
+
+        public async Task<HttpOperationResponse<IList<Devices>>> GetDevicesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
+        }
+
+        public async Task<HttpOperationResponse<object>> PostDeviceAsync(Devices nou = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
+        }
+
+        public async Task<HttpOperationResponse<object>> GetDeviceAsync(int id,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
+        }
+
+        public async Task<HttpOperationResponse<object>> PutDeviceAsync(int id,
+            Devices nou = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
+        }
+
+        public async Task<HttpOperationResponse<object>> DeleteDeviceAsync(int id,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
+        }
+
+        public async Task<HttpOperationResponse<object>> PatchDeviceAsync(int id,
+            JsonPatchDocumentDevices patch = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = new CancellationToken()) {
+            return null;
         }
     }
 }
