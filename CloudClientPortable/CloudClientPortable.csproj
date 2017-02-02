@@ -43,6 +43,7 @@
     <Compile Include="Models\JsonPatchDocumentHistoricData.cs" />
     <Compile Include="Models\OperationDevices.cs" />
     <Compile Include="Models\OperationHistoricData.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
