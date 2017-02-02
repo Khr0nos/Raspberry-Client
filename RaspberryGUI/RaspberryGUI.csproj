@@ -132,6 +132,14 @@
       <Name>CloudClientPortable</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="DevExpress.Controls, Version=16.2">
+      <Name>DevExpress.Controls</Name>
+    </SDKReference>
+    <SDKReference Include="DevExpress.Core, version=16.2">
+      <Name>DevExpress.Core</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
