@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="output" HorizontalAlignment="Center" Margin="409,104,1120,810" TextWrapping="Wrap" Text="" VerticalAlignment="Center" IsReadOnly="True" FontSize="26"/>
-        <Ellipse x:Name="status" Fill="#FFF4F4F5" Height="70" Margin="996,104,0,0" Stroke="Black" VerticalAlignment="Top" Width="65" HorizontalAlignment="Left" IsDoubleTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False"/>
+        <TextBox x:Name="output" HorizontalAlignment="Center" Margin="63,104,1793,929" TextWrapping="Wrap" Text="" VerticalAlignment="Center" IsReadOnly="True" FontSize="26"/>
+        <Ellipse x:Name="status" Fill="#FFF4F4F5" Height="70" Margin="488,81,0,0" Stroke="Black" VerticalAlignment="Top" Width="65" HorizontalAlignment="Left" IsDoubleTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False"/>
     </Grid>
 </Page>

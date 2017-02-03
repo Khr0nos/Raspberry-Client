@@ -39,7 +39,7 @@ namespace CloudAPI.Rest.Client {
         public static async Task<IList<HistoricData>> GetDataAsync(
             this ICloudClient operations,
             CancellationToken cancellationToken = default(CancellationToken)) {
-            using (var _result = await operations.GetDataAsync(null, cancellationToken).ConfigureAwait(false)) {
+            using (var _result = await operations.HttpGetData(null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
         }
@@ -77,7 +77,7 @@ namespace CloudAPI.Rest.Client {
         public static async Task<object> PostDataAsync(this ICloudClient operations,
             HistoricData nou = default(HistoricData),
             CancellationToken cancellationToken = default(CancellationToken)) {
-            using (var _result = await operations.PostDataAsync(nou, null, cancellationToken).ConfigureAwait(false)) {
+            using (var _result = await operations.HttpPostData(nou, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
         }
@@ -112,7 +112,7 @@ namespace CloudAPI.Rest.Client {
         public static async Task<object> GetDataAsync(this ICloudClient operations,
             int id,
             CancellationToken cancellationToken = default(CancellationToken)) {
-            using (var _result = await operations.GetDataAsync(id, null, cancellationToken).ConfigureAwait(false)) {
+            using (var _result = await operations.HttpGetData(id, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
         }
@@ -154,8 +154,48 @@ namespace CloudAPI.Rest.Client {
             int id,
             HistoricData nou = default(HistoricData),
             CancellationToken cancellationToken = default(CancellationToken)) {
-            using (var _result = await operations.PutDataAsync(id, nou, null, cancellationToken).ConfigureAwait(false)) {
+            using (var _result = await operations.HttpPutData(id, nou, null, cancellationToken).ConfigureAwait(false)) {
                 return _result;
+            }
+        }
+
+        /// <summary>
+        /// Updates some HistoricData information
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// HistoricData identifier
+        /// </param>
+        /// <param name='patch'>
+        /// HistoricData updated information
+        /// </param>
+        public static object PatchData(this ICloudClient operations, int id, JsonPatchDocumentHistoricData patch = default(JsonPatchDocumentHistoricData))
+        {
+            return Task.Factory.StartNew(s => ((ICloudClient)s).PatchDataAsync(id, patch), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Updates some HistoricData information
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='id'>
+        /// HistoricData identifier
+        /// </param>
+        /// <param name='patch'>
+        /// HistoricData updated information
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> PatchDataAsync(this ICloudClient operations, int id, JsonPatchDocumentHistoricData patch = default(JsonPatchDocumentHistoricData), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.HttpPatchData(id, patch, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
             }
         }
 
@@ -189,7 +229,7 @@ namespace CloudAPI.Rest.Client {
         public static async Task<object> DeleteDataAsync(this ICloudClient operations,
             int id,
             CancellationToken cancellationToken = default(CancellationToken)) {
-            using (var _result = await operations.DeleteDataAsync(id, null, cancellationToken).ConfigureAwait(false)) {
+            using (var _result = await operations.HttpDeleteData(id, null, cancellationToken).ConfigureAwait(false)) {
                 return _result.Body;
             }
         }
@@ -222,7 +262,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<IList<Devices>> GetDevicesAsync(this ICloudClient operations, CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.GetDevicesAsync(null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpGetDevices(null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -256,7 +296,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> PostDeviceAsync(this ICloudClient operations, Devices nou = default(Devices), CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.PostDeviceAsync(nou, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpPostDevice(nou, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -290,7 +330,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> GetDeviceAsync(this ICloudClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.GetDeviceAsync(id, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpGetDevice(id, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -330,7 +370,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> PutDeviceAsync(this ICloudClient operations, int id, Devices nou = default(Devices), CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.PutDeviceAsync(id, nou, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpPutDevice(id, nou, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -364,7 +404,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> DeleteDeviceAsync(this ICloudClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.DeleteDeviceAsync(id, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpDeleteDevice(id, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -404,7 +444,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         public static async Task<object> PatchDeviceAsync(this ICloudClient operations, int id, JsonPatchDocumentDevices patch = default(JsonPatchDocumentDevices), CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.PatchDeviceAsync(id, patch, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.HttpPatchDevice(id, patch, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

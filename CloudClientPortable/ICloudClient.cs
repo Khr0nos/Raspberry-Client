@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client {
     /// <summary>
-    /// ASP.NET Core Web service using a REST API
+    /// ASP.NET Core Cloud API client
     /// </summary>
     public interface ICloudClient : IDisposable {
         /// <summary>
@@ -41,7 +41,7 @@ namespace CloudAPI.Rest.Client {
         /// </param>
         Task
             <HttpOperationResponse<IList<HistoricData>>>
-            GetDataAsync(
+            HttpGetData(
                 Dictionary<string, List<string>> customHeaders =
                     null,
                 CancellationToken cancellationToken = default(CancellationToken));
@@ -58,7 +58,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostDataAsync(HistoricData nou = default(HistoricData),
+        Task<HttpOperationResponse<object>> HttpPostData(HistoricData nou = default(HistoricData),
             Dictionary<string, List<string>> customHeaders =
                 null,
             CancellationToken cancellationToken = default(CancellationToken));
@@ -75,7 +75,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         ///     The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetDataAsync(int id,
+        Task<HttpOperationResponse<object>> HttpGetData(int id,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
@@ -94,7 +94,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> PutDataAsync(
+        Task<HttpOperationResponse> HttpPutData(
             int id,
             HistoricData nou = default(HistoricData),
             Dictionary<string, List<string>> customHeaders = null,
@@ -113,7 +113,7 @@ namespace CloudAPI.Rest.Client {
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<object>>
-            DeleteDataAsync(int id,
+            HttpDeleteData(int id,
                 Dictionary<string, List<string>> customHeaders =
                     null,
                 CancellationToken cancellationToken = default(CancellationToken));
@@ -130,7 +130,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<Devices>>> GetDevicesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<Devices>>> HttpGetDevices(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Adds new Device
@@ -144,7 +144,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostDeviceAsync(Devices nou = default(Devices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> HttpPostDevice(Devices nou = default(Devices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets specific Device
@@ -158,7 +158,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetDeviceAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> HttpGetDevice(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates existing Device
@@ -175,7 +175,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PutDeviceAsync(int id, Devices nou = default(Devices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> HttpPutDevice(int id, Devices nou = default(Devices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes specific Device
@@ -189,7 +189,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> DeleteDeviceAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> HttpDeleteDevice(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates some Device information
@@ -206,7 +206,23 @@ namespace CloudAPI.Rest.Client {
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PatchDeviceAsync(int id, JsonPatchDocumentDevices patch = default(JsonPatchDocumentDevices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
+        Task<HttpOperationResponse<object>> HttpPatchDevice(int id, JsonPatchDocumentDevices patch = default(JsonPatchDocumentDevices), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Updates some HistoricData information
+        /// </summary>
+        /// <param name='id'>
+        /// HistoricData identifier
+        /// </param>
+        /// <param name='patch'>
+        /// HistoricData updated information
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> HttpPatchData(int id, JsonPatchDocumentHistoricData patch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
