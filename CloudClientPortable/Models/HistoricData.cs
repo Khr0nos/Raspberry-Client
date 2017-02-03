@@ -7,33 +7,19 @@ namespace CloudAPI.Rest.Client.Models {
         /// <summary>
         /// Initializes a new instance of the HistoricData class.
         /// </summary>
-        public HistoricData(int device, string dataValue, int dataType) {
-            IdhistoricData = default(int?);
+        public HistoricData(int device,
+            string dataValue,
+            int dataType,
+            int? idhistoricData = null,
+            DateTime? histDataDate = null,
+            bool histDataToDevice = false,
+            bool histDataAck = false,
+            string histDataAux = null) {
+            IdhistoricData = idhistoricData;
             Iddevice = device;
-            HistDataDate = default(DateTime?);
+            HistDataDate = histDataDate;
             HistDataValue = dataValue;
             IddataType = dataType;
-            HistDataToDevice = false;
-            HistDataAck = false;
-            HistDataAux = null;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the HistoricData class.
-        /// </summary>
-        public HistoricData(int iddevice,
-            string histDataValue,
-            int iddataType,
-            int? idhistoricData = default(int?),
-            DateTime? histDataDate = default(DateTime?),
-            bool? histDataToDevice = default(bool?),
-            bool? histDataAck = default(bool?),
-            string histDataAux = default(string)) {
-            IdhistoricData = idhistoricData;
-            Iddevice = iddevice;
-            HistDataDate = histDataDate;
-            HistDataValue = histDataValue;
-            IddataType = iddataType;
             HistDataToDevice = histDataToDevice;
             HistDataAck = histDataAck;
             HistDataAux = histDataAux;
@@ -67,12 +53,12 @@ namespace CloudAPI.Rest.Client.Models {
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "histDataToDevice")]
-        public bool? HistDataToDevice { get; set; }
+        public bool HistDataToDevice { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "histDataAck")]
-        public bool? HistDataAck { get; set; }
+        public bool HistDataAck { get; set; }
 
         /// <summary>
         /// </summary>
