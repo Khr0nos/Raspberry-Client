@@ -69,7 +69,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         public CloudClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers) {
@@ -91,7 +91,7 @@ namespace CloudAPI.Rest.Client {
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         public CloudClient(Uri baseUri,
