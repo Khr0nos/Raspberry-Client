@@ -13,7 +13,7 @@ namespace CloudAPI.Rest.Client.Models {
         public HistoricData(int device,
             string dataValue,
             int dataType,
-            int? idhistoricData = null,
+            int idhistoricData = 0,
             DateTime? histDataDate = null,
             bool histDataToDevice = false,
             bool histDataAck = false,
@@ -32,7 +32,7 @@ namespace CloudAPI.Rest.Client.Models {
         /// Data identifier
         /// </summary>
         [JsonProperty(PropertyName = "idhistoricData")]
-        public int? IdhistoricData { get; set; }
+        public int IdhistoricData { get; set; }
 
         /// <summary>
         /// Device identifier.

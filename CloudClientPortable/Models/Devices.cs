@@ -15,7 +15,7 @@ namespace CloudAPI.Rest.Client.Models {
             bool connected = false,
             bool needLogin = false,
             int interval = 1000,
-            int? iddevice = null,
+            int iddevice = 0,
             DateTime? creationDate = null,
             string username = "",
             string password = "",
@@ -39,7 +39,7 @@ namespace CloudAPI.Rest.Client.Models {
         /// Device identifier
         /// </summary>
         [JsonProperty(PropertyName = "iddevice")]
-        public int? Iddevice { get; set; }
+        public int Iddevice { get; set; }
 
         /// <summary>
         /// Device Name

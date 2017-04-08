@@ -385,7 +385,7 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                        SafeJsonConvert.DeserializeObject<object>(_responseContent,
                             DeserializationSettings);
                 } catch (JsonException ex) {
                     _httpRequest.Dispose();
@@ -1216,7 +1216,7 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                        SafeJsonConvert.DeserializeObject<Devices>(_responseContent,
                             DeserializationSettings);
                 } catch (JsonException ex) {
                     _httpRequest.Dispose();
@@ -1629,7 +1629,7 @@ namespace CloudAPI.Rest.Client {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try {
                     _result.Body =
-                        SafeJsonConvert.DeserializeObject<HistoricData>(_responseContent,
+                        SafeJsonConvert.DeserializeObject<Devices>(_responseContent,
                             DeserializationSettings);
                 } catch (JsonException ex) {
                     _httpRequest.Dispose();
