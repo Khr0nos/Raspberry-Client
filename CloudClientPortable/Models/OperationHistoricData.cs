@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client.Models
 {
+    /// <summary>
+    /// Partial update of HistoricData
+    /// </summary>
     public class OperationHistoricData
     {
         /// <summary>
@@ -11,7 +14,7 @@ namespace CloudAPI.Rest.Client.Models
         public OperationHistoricData() { }
 
         /// <summary>
-        /// Initializes a new instance of the OperationHistoricData class.
+        /// Initializes a new instance of the OperationHistoricData class with initial values
         /// </summary>
         public OperationHistoricData(object value = default(object), string path = default(string), string op = default(string), string fromProperty = default(string))
         {
@@ -22,22 +25,23 @@ namespace CloudAPI.Rest.Client.Models
         }
 
         /// <summary>
+        /// New value
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }
 
         /// <summary>
+        /// Field to modify
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
+        /// Operation to perform on field. Should be "replace"
         /// </summary>
         [JsonProperty(PropertyName = "op")]
         public string Op { get; set; }
 
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "from")]
         public string FromProperty { get; set; }
 

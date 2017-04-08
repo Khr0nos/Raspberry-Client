@@ -2,6 +2,9 @@ using System;
 using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client.Models {
+    /// <summary>
+    /// Model class for Devices table entries
+    /// </summary>
     public class Devices {
         /// <summary>
         /// Initializes a new instance of the Devices class.
@@ -33,61 +36,73 @@ namespace CloudAPI.Rest.Client.Models {
         }
 
         /// <summary>
+        /// Device identifier
         /// </summary>
         [JsonProperty(PropertyName = "iddevice")]
         public int? Iddevice { get; set; }
 
         /// <summary>
+        /// Device Name
         /// </summary>
         [JsonProperty(PropertyName = "deviceName")]
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// Device Type identifier
         /// </summary>
         [JsonProperty(PropertyName = "idauxDeviceType")]
         public int IdauxDeviceType { get; set; }
 
         /// <summary>
+        /// Boolean to indicate state of activation of device
         /// </summary>
         [JsonProperty(PropertyName = "deviceEnabled")]
         public bool DeviceEnabled { get; set; }
 
         /// <summary>
+        /// Boolean to indicate state of connection of device
         /// </summary>
         [JsonProperty(PropertyName = "deviceConnected")]
         public bool DeviceConnected { get; set; }
 
         /// <summary>
+        /// Boolean to indicate use of login of device
         /// </summary>
         [JsonProperty(PropertyName = "deviceNeedLogin")]
         public bool DeviceNeedLogin { get; set; }
 
         /// <summary>
+        /// Interval of data sending
         /// </summary>
         [JsonProperty(PropertyName = "deviceInterval")]
         public int DeviceInterval { get; set; }
 
         /// <summary>
+        /// Date and time of device creation
         /// </summary>
         [JsonProperty(PropertyName = "deviceCreationDate")]
         public DateTime? DeviceCreationDate { get; set; }
 
         /// <summary>
+        /// Username for login
         /// </summary>
         [JsonProperty(PropertyName = "deviceUsername")]
         public string DeviceUsername { get; set; }
 
         /// <summary>
+        /// Password for login
         /// </summary>
         [JsonProperty(PropertyName = "devicePassword")]
         public string DevicePassword { get; set; }
 
         /// <summary>
+        /// Device Protocol identifier
         /// </summary>
         [JsonProperty(PropertyName = "iddeviceProtocol")]
         public int IddeviceProtocol { get; set; }
 
         /// <summary>
+        /// Auxiliar field. Optional
         /// </summary>
         [JsonProperty(PropertyName = "deviceAux")]
         public string DeviceAux { get; set; }

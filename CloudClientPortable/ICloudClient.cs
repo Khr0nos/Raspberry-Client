@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client {
     /// <summary>
-    /// ASP.NET Core Cloud API client
+    /// CloudClient Interface definition
     /// </summary>
     public interface ICloudClient : IDisposable {
         /// <summary>

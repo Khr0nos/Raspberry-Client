@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client.Models
 {
+    /// <summary>
+    /// Model class for Devices partial updates via Patch requests
+    /// </summary>
     public class JsonPatchDocumentDevices
     {
         /// <summary>
@@ -12,7 +15,7 @@ namespace CloudAPI.Rest.Client.Models
         public JsonPatchDocumentDevices() { }
 
         /// <summary>
-        /// Initializes a new instance of the JsonPatchDocumentDevices class.
+        /// Initializes a new instance of the JsonPatchDocumentDevices class with initial list
         /// </summary>
         public JsonPatchDocumentDevices(IList<OperationDevices> operations = default(IList<OperationDevices>))
         {
@@ -20,6 +23,7 @@ namespace CloudAPI.Rest.Client.Models
         }
 
         /// <summary>
+        /// List of partial updates of Devices
         /// </summary>
         [JsonProperty(PropertyName = "operations")]
         public IList<OperationDevices> Operations { get; private set; }

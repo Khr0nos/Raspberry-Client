@@ -22,22 +22,23 @@ namespace CloudAPI.Rest.Client.Models
         }
 
         /// <summary>
+        /// New value
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }
 
         /// <summary>
+        /// Field to modify
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
+        /// Operation to perform on field. Should be "replace"
         /// </summary>
         [JsonProperty(PropertyName = "op")]
         public string Op { get; set; }
 
-        /// <summary>
-        /// </summary>
         [JsonProperty(PropertyName = "from")]
         public string FromProperty { get; set; }
 
