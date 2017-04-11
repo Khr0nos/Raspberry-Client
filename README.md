@@ -1,6 +1,6 @@
 # Cloud-Client
 
-Generic Multiplatform client for cloud service.
+Generic cross-platform client for cloud service.
 Works on PC, Linux, Mac and Raspberry Pi
 
 Raspberry Background communication program sample with Cloud API, 
