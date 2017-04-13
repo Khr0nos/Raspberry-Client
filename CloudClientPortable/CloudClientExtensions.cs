@@ -5,7 +5,7 @@ using CloudAPI.Rest.Client.Models;
 
 namespace CloudAPI.Rest.Client {
     /// <summary>
-    /// Extension methods for CloudClient.
+    /// Extension methods for CloudClient interface.
     /// </summary>
     public static class CloudClientExtensions {
         /// <summary>
@@ -15,7 +15,7 @@ namespace CloudAPI.Rest.Client {
         /// Returns a JSON array of Historic Data items
         /// </remarks>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         public static IList<HistoricData> GetData(this ICloudClient operations) {
             return
@@ -31,7 +31,7 @@ namespace CloudAPI.Rest.Client {
         /// Returns a JSON array of Historic Data items
         /// </remarks>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -48,7 +48,7 @@ namespace CloudAPI.Rest.Client {
         /// Adds new HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='nou'>
         /// new HistoricData to be added
@@ -66,7 +66,7 @@ namespace CloudAPI.Rest.Client {
         /// Adds new HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='nou'>
         /// new HistoricData to be added
@@ -86,7 +86,7 @@ namespace CloudAPI.Rest.Client {
         /// Gets specific HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -101,7 +101,7 @@ namespace CloudAPI.Rest.Client {
         /// Gets specific HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -121,7 +121,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates existing HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -139,7 +139,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates existing HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -163,7 +163,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates some HistoricData information
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -180,7 +180,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates some HistoricData information
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -203,7 +203,7 @@ namespace CloudAPI.Rest.Client {
         /// Deletes specific HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -218,7 +218,7 @@ namespace CloudAPI.Rest.Client {
         /// Deletes specific HistoricData
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// HistoricData identifier
@@ -241,7 +241,7 @@ namespace CloudAPI.Rest.Client {
         /// Returns a JSON array of Devices
         /// </remarks>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         public static IList<Devices> GetDevices(this ICloudClient operations)
         {
@@ -255,7 +255,7 @@ namespace CloudAPI.Rest.Client {
         /// Returns a JSON array of Devices
         /// </remarks>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -272,7 +272,7 @@ namespace CloudAPI.Rest.Client {
         /// Adds new Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='nou'>
         /// new logic Device definition to be added
@@ -286,7 +286,7 @@ namespace CloudAPI.Rest.Client {
         /// Adds new Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='nou'>
         /// new logic Device definition to be added
@@ -306,7 +306,7 @@ namespace CloudAPI.Rest.Client {
         /// Gets specific Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -320,7 +320,7 @@ namespace CloudAPI.Rest.Client {
         /// Gets specific Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -340,7 +340,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates existing Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -357,7 +357,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates existing Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -380,7 +380,7 @@ namespace CloudAPI.Rest.Client {
         /// Deletes specific Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -394,7 +394,7 @@ namespace CloudAPI.Rest.Client {
         /// Deletes specific Device
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -414,7 +414,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates some Device information
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier
@@ -431,7 +431,7 @@ namespace CloudAPI.Rest.Client {
         /// Updates some Device information
         /// </summary>
         /// <param name='operations'>
-        /// The operations group for this extension method.
+        /// The CloudClient to be extended
         /// </param>
         /// <param name='id'>
         /// Device identifier

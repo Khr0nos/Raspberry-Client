@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace CloudAPI.Rest.Client {
     /// <summary>
-    /// ASP.NET Core Web service using a REST API
+    /// Cloud Client interface implementation
     /// </summary>
     public partial class CloudClient : ServiceClient<CloudClient>, ICloudClient {
         /// <summary>
