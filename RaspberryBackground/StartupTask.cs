@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
-//Threading.Timer ?
-using Windows.System.Threading;
 using CloudAPI.Rest.Client;
 using Windows.ApplicationModel.Background;
 using CloudAPI.Rest.Client.Models;
