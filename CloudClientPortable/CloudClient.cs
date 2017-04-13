@@ -142,7 +142,7 @@ namespace CloudAPI.Rest.Client {
         /// </summary>
         public async Task<bool> GetAccessToken() {
             var request = new HttpRequestMessage(HttpMethod.Post, "https://xgarcia.eu.auth0.com/oauth/token");
-            request.Headers.Add("content-type", "application/json");
+            request.Headers.TryAddWithoutValidation("content-type", "application/json");
             request.Content =
                 new StringContent(
                     "{\"client_id\":\"9tA5SO5UvaASfKgeTPfJ6j9xk66GbFCo\",\"client_secret\":\"2RSSP29nT-WomHPHtx_IPynUoxOsHyc2RhcFBPEmd2REACcY4oEPK_K9jmNWA44s\",\"audience\":\"https://cloudtfg.azurewebsites.net/api/devices\",\"grant_type\":\"client_credentials\"}",

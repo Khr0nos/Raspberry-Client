@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media;
 using CloudAPI.Rest.Client;
 using CloudAPI.Rest.Client.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -35,9 +36,9 @@ namespace RaspberryGUI
                 data = new HistoricData(2, rng.NextDouble().ToString(), 1);
                 var res = client.HttpPostData(data);
                 if (res.Result.Response.StatusCode == HttpStatusCode.Created) {
-                    var added = (HistoricData) res.Result.Body;
-                    output.Text =
-                        $"Data added:\nid: {added.IdhistoricData}\nvalue: {added.HistDataValue}\ndate: {added.HistDataDate}";
+                    var added = (JObject) res.Result.Body;
+                    //output.Text =
+                    //    $"Data added:\nid: {added.IdhistoricData}\nvalue: {added.HistDataValue}\ndate: {added.HistDataDate}";
                     status.Fill = new SolidColorBrush(Colors.Green);
                 } else {
                     output.Text = JsonConvert.SerializeObject(res.Result.Body);
