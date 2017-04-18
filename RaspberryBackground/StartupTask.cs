@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Threading;
 using CloudAPI.Rest.Client;
 using Windows.ApplicationModel.Background;
@@ -12,10 +13,9 @@ namespace RaspberryBackground {
     public sealed class StartupTask : IBackgroundTask {
 
         private CloudClient client;
-        private HistoricData data;
         private Random rng;
         private Timer timer;
-        private int delay = 2000;
+        private int delay = 5000;
         private const int DeviceId = 2;
 
         public async void Run(IBackgroundTaskInstance taskInstance) {
@@ -42,25 +42,27 @@ namespace RaspberryBackground {
             //deferral.Complete();
         }
 
-        private void Callback(object state) {
+        private async void Callback(object state) {
             try {
                 var device = (Devices)client.GetDevices(DeviceId);
 
                 if (device.DeviceEnabled) {
-                    data = new HistoricData(DeviceId, rng.Next(20, 25).ToString(), 1);
-                    var response = (JObject)client.PostData(data);
-                    Debug.WriteLine(response.ToString());
+                    var result = await client.HttpPostData(new HistoricData(DeviceId, rng.Next(20, 25).ToString(), 1));
+                    Debug.WriteLine(result.Body.ToString());
 
-                    var interval = (int)response["Interval"];
-                    if (interval != delay) {
-                        delay = interval;
-                        timer.Change(0, delay);
+                    if (result.Response.StatusCode == HttpStatusCode.Created) {
+                        var data = (JObject) result.Body;
+                        var interval = (int)data["Interval"];
+                        if (interval != delay) {
+                            delay = interval;
+                            timer.Change(1000, delay);
+                        }
                     }
                 }
 
             }
             catch (Exception e) {
-                Debug.WriteLine(e);
+                Debug.WriteLine(e.Message);
             }
         }
     }

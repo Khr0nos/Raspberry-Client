@@ -764,7 +764,7 @@ namespace CloudAPI.Rest.Client {
             // Serialize Request
             string _requestContent = null;
             if (patch != null) {
-                _requestContent = SafeJsonConvert.SerializeObject(patch,
+                _requestContent = SafeJsonConvert.SerializeObject(patch.Operations,
                     SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =
@@ -1746,7 +1746,7 @@ namespace CloudAPI.Rest.Client {
             // Serialize Request
             string _requestContent = null;
             if (patch != null) {
-                _requestContent = SafeJsonConvert.SerializeObject(patch,
+                _requestContent = SafeJsonConvert.SerializeObject(patch.Operations,
                     SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =
