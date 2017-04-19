@@ -18,6 +18,8 @@ namespace RaspberryBackground {
         private int delay = 5000;
         private const int DeviceId = 2;
 
+        private BackgroundTaskDeferral deferral;
+
         public async void Run(IBackgroundTaskInstance taskInstance) {
             // 
             // Code to perform background work
@@ -30,7 +32,8 @@ namespace RaspberryBackground {
             rng = new Random();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
 
-            var deferral = taskInstance.GetDeferral();
+            deferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += TaskInstanceOnCanceled;
             try {
                 await client.GetAccessToken();
             }
@@ -40,6 +43,10 @@ namespace RaspberryBackground {
             
             timer = new Timer(Callback, null, 0, delay);
             //deferral.Complete();
+        }
+
+        private void TaskInstanceOnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason) {
+            deferral?.Complete();
         }
 
         private async void Callback(object state) {
@@ -55,7 +62,7 @@ namespace RaspberryBackground {
                         var interval = (int)data["Interval"];
                         if (interval != delay) {
                             delay = interval;
-                            timer.Change(1000, delay);
+                            timer.Change(0, delay);
                         }
                     }
                 }
