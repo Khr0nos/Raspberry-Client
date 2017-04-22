@@ -31,7 +31,7 @@ namespace RaspberryBackground {
 
             rng = new Random();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
-
+            
             deferral = taskInstance.GetDeferral();
             taskInstance.Canceled += TaskInstanceOnCanceled;
             try {
@@ -42,11 +42,10 @@ namespace RaspberryBackground {
             }
             
             timer = new Timer(Callback, null, 0, delay);
-            //deferral.Complete();
         }
 
         private void TaskInstanceOnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason) {
-            deferral?.Complete();
+            if (reason == BackgroundTaskCancellationReason.Terminating) deferral?.Complete();
         }
 
         private async void Callback(object state) {
