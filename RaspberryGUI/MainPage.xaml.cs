@@ -18,7 +18,7 @@ namespace RaspberryGUI
         private CloudClient client;
         private Random rng;
         private DispatcherTimer timer;
-        private int delay = 5000;
+        private int delay = 4000;
         private const int DeviceId = 2;
 
         public MainPage()
@@ -30,7 +30,7 @@ namespace RaspberryGUI
 
                 initToken().Wait();
 
-                timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(5000) };
+                timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(delay) };
                 timer.Tick += TimerOnTick;
                 timer.Start();
             } catch (Exception ex) {

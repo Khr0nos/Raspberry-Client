@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using CloudAPI.Rest.Client;
 using Windows.ApplicationModel.Background;
+using Windows.Devices.Gpio;
 using CloudAPI.Rest.Client.Models;
 using Newtonsoft.Json.Linq;
 
@@ -15,10 +16,12 @@ namespace RaspberryBackground {
         private CloudClient client;
         private Random rng;
         private Timer timer;
-        private int delay = 5000;
+        private int delay = 4000;
         private const int DeviceId = 2;
 
         private BackgroundTaskDeferral deferral;
+        private GpioController GPIO;
+        private GpioPin output;
 
         public async void Run(IBackgroundTaskInstance taskInstance) {
             // 
@@ -30,6 +33,7 @@ namespace RaspberryBackground {
             //  
 
             rng = new Random();
+            initGPIO();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
             
             deferral = taskInstance.GetDeferral();
@@ -44,8 +48,28 @@ namespace RaspberryBackground {
             timer = new Timer(Callback, null, 0, delay);
         }
 
+        private void initGPIO() {
+            GPIO = GpioController.GetDefault();
+            if (GPIO == null) {
+                Debug.WriteLine("Cannot access Pin controller");
+                return;
+            }
+
+            output = GPIO.OpenPin(5);
+            output.Write(GpioPinValue.High);
+            output.SetDriveMode(GpioPinDriveMode.Output);
+
+            var value = output.Read();
+            Debug.WriteLine(value);
+            
+        }
+
         private void TaskInstanceOnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason) {
-            if (reason == BackgroundTaskCancellationReason.Terminating) deferral?.Complete();
+            if (reason == BackgroundTaskCancellationReason.Terminating) {
+                timer.Dispose();
+                output.Dispose();
+                deferral?.Complete();
+            }
         }
 
         private async void Callback(object state) {
@@ -53,6 +77,7 @@ namespace RaspberryBackground {
                 var device = (Devices)client.GetDevices(DeviceId);
 
                 if (device.DeviceEnabled) {
+                    //TODO read from output pin
                     var result = await client.HttpPostData(new HistoricData(DeviceId, rng.Next(20, 25).ToString(), 1));
                     Debug.WriteLine(result.Body.ToString());
 
