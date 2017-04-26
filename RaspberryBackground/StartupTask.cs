@@ -13,8 +13,9 @@ using Newtonsoft.Json.Linq;
 namespace RaspberryBackground {
     public sealed class StartupTask : IBackgroundTask {
         private CloudClient client;
-        private Random rng;
-        private Timer timer;
+        //private Random rng;
+        private Timer dataTimer;
+        private Timer ledTimer;
         private int delay = 4000;
         private const int DeviceId = 2;
         private const int switch_pin = 2;
@@ -55,7 +56,7 @@ namespace RaspberryBackground {
             // described in http://aka.ms/backgroundtaskdeferral
             //  
 
-            rng = new Random();
+            //rng = new Random();
             initGPIO();
             client = new CloudClient {BaseUri = new Uri("https://cloudtfg.azurewebsites.net")};
 
@@ -67,27 +68,28 @@ namespace RaspberryBackground {
                 Debug.WriteLine(e);
             }
 
-            timer = new Timer(Callback, null, 0, delay);
+            dataTimer = new Timer(DataSend, null, 0, delay);
+            ledTimer = new Timer(LedFlip, null, 0, 100);
         }   
 
         private void TaskInstanceOnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason) {
             if (reason == BackgroundTaskCancellationReason.Terminating) {
-                timer.Dispose();
+                dataTimer.Dispose();
+                ledTimer.Dispose();
                 switchPin.Dispose();
+                ledPin.Dispose();
                 deferral?.Complete();
             }
         }
 
-        private async void Callback(object state) {
+        private async void DataSend(object state) {
             try {
-                var switch_read = switchPin.Read();
-                Debug.WriteLine(switch_read);
-                ledPin.Write(switch_read);
                 var device = (Devices) client.GetDevices(DeviceId);
 
                 if (device.DeviceEnabled) {
-                    //TODO read from output pin
-                    var active_state = switch_read == GpioPinValue.Low ? "Active" : "Inactive";
+                    var switchRead = switchPin.Read();
+                    Debug.WriteLine(switchRead);
+                    var active_state = switchRead == GpioPinValue.Low ? "Active" : "Inactive";
                     var result = await client.HttpPostData(new HistoricData(DeviceId, active_state, 5)); //rng.Next(20, 25).ToString() type 1 type 5 == activation state
                     Debug.WriteLine(result.Body.ToString());
 
@@ -96,13 +98,19 @@ namespace RaspberryBackground {
                         var interval = (int) data["Interval"];
                         if (interval != delay) {
                             delay = interval;
-                            timer.Change(0, delay);
+                            dataTimer.Change(0, delay);
                         }
                     }
                 }
             } catch (Exception e) {
                 Debug.WriteLine(e.Message);
             }
+        }
+
+        private void LedFlip(object state) {
+            var switchRead = switchPin.Read();
+            //Debug.WriteLine(switchRead);
+            ledPin.Write(switchRead);
         }
     }
 }
